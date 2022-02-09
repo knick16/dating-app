@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { useState } from 'react';
+import AuthContext from "./context/UserContext";
+
+import Splash from "./components/Splash";
+import Login from "./components/Login";
+import NavBar from "./components/NavBar";
 
 function App() {
+
+  const [userStatus, setUserStatus] = useState();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <AuthContext.Provider value={[userStatus, setUserStatus]}>
+
+
+        <Switch>
+          <Route exact path='/'>
+            <Splash />
+          </Route>
+
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+        </Switch>
+
+      </AuthContext.Provider>
+    </Router>
+  )
+
 }
 
 export default App;
