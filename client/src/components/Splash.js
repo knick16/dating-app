@@ -24,7 +24,7 @@ function Splash() {
             <br />
             <Link to="/login" className='btn btn-primary' >Login</Link>
             <a>&emsp;</a>
-            <Link to="/registration" className='btn btn-outline-primary' >Register</Link>
+            <Link to="/registration" className='btn btn-outline-primary'>Register</Link>
         </div>
     )
 }

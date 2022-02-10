@@ -5,6 +5,8 @@ import AuthContext from "./context/UserContext";
 import Splash from "./components/Splash";
 import Login from "./components/Login";
 import NavBar from "./components/NavBar";
+import NotFound from "./components/NotFound";
+import Home from "./components/Home";
 
 function App() {
 
@@ -23,6 +25,13 @@ function App() {
           <Route exact path='/login'>
             <Login />
           </Route>
+
+          <Route exact path='/home'>
+            <Home />
+          </Route>
+
+          <Route component={NotFound} />
+
         </Switch>
 
       </AuthContext.Provider>

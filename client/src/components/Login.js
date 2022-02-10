@@ -2,11 +2,13 @@ import { useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import UserContext from "./../context/UserContext";
+import './CustomStyling.css';
 
 function Login() {
 
     // Initializations.
-    const [_, setCurrentUser] = useContext(UserContext);
+    const [_, setUserStatus] = useContext(UserContext);
+
     const history = useHistory();
 
     const [username, setUsername] = useState('');
@@ -24,53 +26,43 @@ function Login() {
         setPassword(event.target.value);
     };
 
-
     // Login function.
-    const doSubmit = (e) => {
+    const doSubmit = async (e) => {
         e.preventDefault();
 
-        const init = {
-            method: 'POST',
+        const response = await fetch("http://localhost:8080/api/security/authenticate", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username, password })
-        };
+            body: JSON.stringify({
+                username,
+                password,
+            }),
+        });
 
-        fetch('http://localhost:8080/api/security/authenticate', init)
+        // This code executes if the request is successful
+        if (response.status === 200) {
+            const { jwt_token } = await response.json();
+            localStorage.setItem("token", jwt_token);
+            setUserStatus({ user: jwtDecode(jwt_token) });
+            history.push("/home");
 
-            .then(response => {
-                // This code executes if the request is successful.
-                if (response.status === 200) {
-                    const { jwt_token } = response.json();
+            // This code executes for a bad request.
+        } else if (response.status === 400) {
+            const errors = await response.json();
+            setErrors(errors);
 
-                    localStorage.setItem("token", jwt_token);
-                    setCurrentUser({ user: jwtDecode(jwt_token) });
-                    history.push("/");
-                    // logLocation();
+            // This code executes for invalid credentials.
+        } else if (response.status === 403) {
+            setErrors(["Invalid credentials."]);
 
-                    // This code executes for a bad request.
-                } else if (response.status === 400) {
-                    const errors = response.json();
-                    setErrors(errors);
-
-                    // This code executes for invalid credentials.
-                } else if (response.status === 403) {
-                    setErrors(["Login failed."]);
-
-                    // This code executes for all other errors.
-                } else {
-                    setErrors(["Unknown error."]);
-                }
-            })
-            .catch(
-                (error) => {
-                    console.log("POST request has been caught!");
-                    console.log(error);
-                }
-            );
+            // This code executes for all other errors.
+        } else {
+            setErrors(["Unknown error."]);
+        }
     };
+
 
 
     // Return JSX.
@@ -109,6 +101,7 @@ function Login() {
                     <br />
                     <span>
                         <button className="btn btn-primary btn-md" >Login</button>
+                        <a>&emsp;</a>
                         <Link to='/' className='btn btn-outline-secondary btn-md' >Back</Link>
                     </span>
                 </form>
