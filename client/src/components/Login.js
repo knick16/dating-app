@@ -26,6 +26,7 @@ function Login() {
         setPassword(event.target.value);
     };
 
+
     // Login function.
     const doSubmit = async (e) => {
         e.preventDefault();
@@ -62,7 +63,6 @@ function Login() {
             setErrors(["Unknown error."]);
         }
     };
-
 
 
     // Return JSX.

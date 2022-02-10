@@ -16,17 +16,19 @@ function App() {
     <Router>
       <AuthContext.Provider value={[userStatus, setUserStatus]}>
 
+        <NavBar />
 
         <Switch>
           <Route exact path='/'>
-            <Splash />
+            {userStatus?.user ? <Redirect to="/home" /> : <Splash />}
           </Route>
 
           <Route exact path='/login'>
-            <Login />
+          {userStatus?.user ? <Redirect to="/home" /> : <Login />}
           </Route>
 
           <Route exact path='/home'>
+            {userStatus?.user ? <Home /> : <Redirect to="/" />}
             <Home />
           </Route>
 

@@ -31,13 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/security/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers( HttpMethod.POST, "/api/user/register" ).permitAll()
-//                .antMatchers(HttpMethod.GET, "/api/user/all").hasAnyRole("Admin")
-//                .antMatchers(HttpMethod.GET, "/api/user/conversation/*", "/api/user/friend/**", "/api/user/message/*", "/api/user/*").authenticated()
-//                .antMatchers(HttpMethod.PUT, "/api/user/disable/*").hasAnyRole("Admin")
-//                .antMatchers(HttpMethod.PUT, "/api/user/location").authenticated()
-//                .antMatchers(HttpMethod.POST, "/api/user/friend/add", "/api/user/friend/*", "/api/user/conversation/add", "/api/user/message/add").authenticated()
-//                .antMatchers(HttpMethod.DELETE, "/api/user/friend/remove", "/api/user/friend/*", "/api/user/conversation/delete/*").authenticated()
-                .antMatchers("/**").denyAll() //anything not specified just deny
+                .antMatchers(HttpMethod.GET, "/api/user/conversation/**").authenticated()
+                .antMatchers("/**").denyAll() // deny all other requests
 
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))

@@ -1,0 +1,31 @@
+@url = http://localhost:8080/api
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrb2FsYS1jaGF0Iiwic3ViIjoibS1lZGdld29ydGgiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTY0NDUyMDYzOH0.oFXBuQXWKrEgpG5Kzmz5V6QXtpoJZ7xXLW9OpJYQmDI
+
+
+###
+
+# login (normal user)
+POST {{url}}/security/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "m-edgeworth", 
+    "password": "password"
+}
+
+###
+
+# login (admin user)
+POST {{url}}/security/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "k-gavin", 
+    "password": "password"
+}
+
+###
+
+# Find all conversations for a user.
+GET {{url}}/user/conversation HTTP/1.1
+Authorization: Bearer {{token}}

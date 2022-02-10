@@ -23,8 +23,9 @@ function Splash() {
             {/* <img src="./Logo.png" /> */}
             <br />
             <Link to="/login" className='btn btn-primary' >Login</Link>
-            <a>&emsp;</a>
-            <Link to="/registration" className='btn btn-outline-primary'>Register</Link>
+            <br />
+            <br />
+            <Link to="/registration" className='text-primary'>I don't have an account</Link>
         </div>
     )
 }

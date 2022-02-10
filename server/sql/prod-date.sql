@@ -21,16 +21,18 @@ create table users (
     user_gender varchar(10) not null,
     preferred_gender varchar(10) not null,
 	travel_radius int not null,
+    photo varchar(100) null,
     disabled boolean not null default 0,
-    race varchar(15),
-    ethnicity varchar(25),
-    religion varchar(20)
+    race varchar(15) null,
+    ethnicity varchar(25) null,
+    religion varchar(20) null
 );
 
 create table conversations (
 	conversation_id int primary key auto_increment,
     conversation_name varchar(2048) null,
-    conversation_type varchar(10) not null
+    conversation_type varchar(10) not null,
+    time_created timestamp not null default current_timestamp
 );
 
 create table messages (
@@ -72,6 +74,7 @@ create table users_roles (
 create table users_conversations (
 	user_id int not null, 
     conversation_id int not null,
+    show_photo int default 0,
     
     constraint fk_users_converstaions_user_id
 		foreign key (user_id)
@@ -99,6 +102,24 @@ create table relationships (
     
     constraint not_relation_with_self 
 		check (a_id != b_id)
+);
+
+create table requests (
+	requestor_id int not null,
+    requested_id int not null,
+    request_type varchar(10) not null,
+    
+	constraint fk_relationships_requestor_id 
+		foreign key (requestor_id)
+        references users(user_id), 
+	constraint fk_relationships_requested_id 
+		foreign key (requested_id)
+        references users(user_id),
+        
+	constraint pk_relationships primary key (requestor_id, requested_id), 
+    
+    constraint not_requested_self 
+		check (requestor_id != requested_id)
 );
     
 -- data
