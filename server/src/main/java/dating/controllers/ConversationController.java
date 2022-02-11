@@ -27,11 +27,6 @@ public class ConversationController {
     @GetMapping
     public ResponseEntity<List<Conversation>> getConversationByFriend(Principal principal){
 
-        String name = principal.getName();
-        System.out.println("-----------");
-        System.out.println(name);
-        System.out.println("-----------");
-
         List<Conversation> conversations = conversationService.findByUsername(principal.getName());
         if (conversations == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

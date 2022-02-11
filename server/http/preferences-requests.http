@@ -1,0 +1,39 @@
+@url = http://localhost:8080/api
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrb2FsYS1jaGF0Iiwic3ViIjoiay1nYXZpbiIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY0NDYxOTY0NH0.FOWJ5OGUvBqd-ImI9_L2QlSWiFwqJT08UUU2ojbJUOk
+
+###
+
+# login (normal user)
+POST {{url}}/security/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "m-edgeworth", 
+    "password": "password"
+}
+
+###
+
+# login (admin user)
+POST {{url}}/security/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "k-gavin", 
+    "password": "password"
+}
+
+###
+
+# Add user preferences.
+POST {{url}}/user/profile/preferences/add HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "userId": 1, 
+    "age": 24,
+    "userGender": "male",
+    "preferredGender": "female",
+    "travelRadius": 25
+}

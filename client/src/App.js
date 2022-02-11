@@ -4,9 +4,12 @@ import AuthContext from "./context/UserContext";
 
 import Splash from "./components/Splash";
 import Login from "./components/Login";
+import Registration from "./components/Registration";
 import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
+import AccountCreated from "./components/AccountCreated";
+import DatingProfile from "./components/DatingProfile";
 
 function App() {
 
@@ -24,12 +27,23 @@ function App() {
           </Route>
 
           <Route exact path='/login'>
-          {userStatus?.user ? <Redirect to="/home" /> : <Login />}
+            {userStatus?.user ? <Redirect to="/home" /> : <Login />}
+          </Route>
+
+          <Route exact path='/registration'>
+            <Registration />
           </Route>
 
           <Route exact path='/home'>
             {userStatus?.user ? <Home /> : <Redirect to="/" />}
-            <Home />
+          </Route>
+
+          <Route exact path='/home/welcome'>
+            {userStatus?.user ? <AccountCreated /> : <Redirect to="/" />}
+          </Route>
+          
+          <Route exact path='/dating/profile'>
+            {userStatus?.user ? <DatingProfile /> : <Redirect to="/" />}
           </Route>
 
           <Route component={NotFound} />

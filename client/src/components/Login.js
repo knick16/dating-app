@@ -67,7 +67,7 @@ function Login() {
 
     // Return JSX.
     return (
-        <div className="text-center">
+        <div className='text-center'>
             {/* <div class="fadeIn first">
                 <img src="./Logo_image.png" id="icon" alt="User Icon" />
             </div> */}
@@ -80,21 +80,21 @@ function Login() {
                 </ul>
             )}
 
-            <div className='form' id="formContent">
+            <div className='form' id='formContent'>
                 <form className='form' onSubmit={doSubmit} noValidate>
                     <div className='row'>
                         <div className='col' />
                         <div className='col-center'>
-                            <label htmlFor="username" >Username:</label>
-                            <input id="username" className="form-control" type="text" placeholder='Username' onChange={changeUsername} required />
+                            <label htmlFor='username' >Username:</label>
+                            <input id='username' className='form-control' type='text' placeholder='Username' onChange={changeUsername} required />
                         </div>
                         <div className='col' />
                     </div>
                     <div className='row'>
                         <div className='col' />
                         <div className='col-center'>
-                            <label htmlFor="password">Password:</label>
-                            <input id="password" className="form-control" type="password" placeholder='Password' onChange={changePassword} required />
+                            <label htmlFor='password'>Password:</label>
+                            <input id='password' className='form-control' type='password' placeholder='Password' onChange={changePassword} required />
                         </div>
                         <div className='col' />
                     </div>

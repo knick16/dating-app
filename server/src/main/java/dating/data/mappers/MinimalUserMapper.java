@@ -23,6 +23,9 @@ public class MinimalUserMapper implements RowMapper<MinimalUser> {
             geoLocation.setLongitude(new BigDecimal(lon));
         }
 
+        String lastName = rs.getString("last_name");
+        String lastNameInitial = lastName.charAt(0) + ".";
+
         MinimalUser mappedUser = new MinimalUser();
 
         mappedUser.setUserId(rs.getInt("user_id"));
@@ -30,6 +33,8 @@ public class MinimalUserMapper implements RowMapper<MinimalUser> {
         mappedUser.setGeolocation(geoLocation);
         mappedUser.setUserGender(rs.getString("user_gender"));
         mappedUser.setPreferredGender(rs.getString("preferred_gender"));
+        mappedUser.setFirstName(rs.getString("first_name"));
+        mappedUser.setLastName(lastNameInitial);
         mappedUser.setAge(rs.getInt("age"));
         mappedUser.setTravelRadius(rs.getInt("travel_radius"));
         mappedUser.setUserGender(rs.getString("user_gender"));

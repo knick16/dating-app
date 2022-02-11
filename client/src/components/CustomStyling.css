@@ -1,3 +1,19 @@
+.horizontal-list li {
+    min-width: 7rem;
+    display: inline-block;
+}
+  
+.horizontal-list {
+    list-style: none;
+    color:#FF009D;
+    margin-left:-34px
+}
+
 .no-bullet li{
     list-style: none;
+}
+
+.placeholder-image {
+    margin-right: 5px;
+    margin-left: -5px;
 }

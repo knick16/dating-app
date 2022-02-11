@@ -1,6 +1,7 @@
 package dating.data;
 
 import dating.models.AppUser;
+import dating.models.MinimalUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public interface AppUserRepository {
 
     @Transactional
     AppUser create(AppUser user);
+
+    @Transactional
+    boolean createPreferences(MinimalUser user);
 
     @Transactional
     boolean updateLocation(AppUser user);

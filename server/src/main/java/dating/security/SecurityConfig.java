@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/security/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers( HttpMethod.POST, "/api/user/register" ).permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/profile/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/user/conversation/**").authenticated()
                 .antMatchers("/**").denyAll() // deny all other requests
 

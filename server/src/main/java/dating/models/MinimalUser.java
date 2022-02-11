@@ -7,11 +7,17 @@ public class MinimalUser {
     private String username;
     private Location geolocation;
 
+    private String firstName;
+    private String lastName;
+
     private String userGender;
     private String preferredGender;
     private int age;
     private int travelRadius;  // miles
     private String photo;
+
+    private String race;
+    private String ethnicity;
 
 
     // constructor
@@ -83,5 +89,37 @@ public class MinimalUser {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public String getEthnicity() {
+        return ethnicity;
+    }
+
+    public void setEthnicity(String ethnicity) {
+        this.ethnicity = ethnicity;
     }
 }

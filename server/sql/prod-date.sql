@@ -17,13 +17,17 @@ create table users (
     longitude decimal(9, 6), -- latitude = [-180, 180] --> allows [-999.999999, 999.999999]
     first_name varchar(50) not null,
     last_name varchar(50) not null,
-    age int not null,
+    disabled boolean not null default 0
+);
+
+create table user_preferences (
+	user_id int primary key unique,
+	age int not null,
     user_gender varchar(10) not null,
     preferred_gender varchar(10) not null,
 	travel_radius int not null,
     photo varchar(100) null,
-    disabled boolean not null default 0,
-    race varchar(15) null,
+	race varchar(15) null,
     ethnicity varchar(25) null,
     religion varchar(20) null
 );
@@ -125,15 +129,15 @@ create table requests (
 -- data
     
 -- users + roles
-insert into users (username, password_hash, email, disabled, latitude, longitude, first_name, last_name, age, user_gender, preferred_gender, travel_radius)
+insert into users (username, password_hash, email, disabled, latitude, longitude, first_name, last_name)
 	values 
 	-- admins 
-	('k-gavin', '$2a$12$VurollGpuTOEYllyOIRyoOrBXM2/omPCX0kU18n/XZjgiyvkBy6Dy', 'k.gavin@.gavinners.com', FALSE, null, null, 'Klavier', 'Gavin', 25, 'male', 'female', 50),
+	('k-gavin', '$2a$12$VurollGpuTOEYllyOIRyoOrBXM2/omPCX0kU18n/XZjgiyvkBy6Dy', 'k.gavin@.gavinners.com', FALSE, null, null, 'Klavier', 'Gavin'),
 		
 	-- users
-	('m-edgeworth', '$2a$12$VurollGpuTOEYllyOIRyoOrBXM2/omPCX0kU18n/XZjgiyvkBy6Dy', 'm.edgeworth@steel-samurai.com', FALSE, null, null, 'Miles', 'Edgeworth', 24, 'male', 'none', 25),
-    ('p-wright', '$2a$12$VurollGpuTOEYllyOIRyoOrBXM2/omPCX0kU18n/XZjgiyvkBy6Dy', 'p.wright@wright-anything.com', FALSE, null, null, 'Pheonix', 'Wright', 24, 'male', 'female', 30);
-            
+	('m-edgeworth', '$2a$12$VurollGpuTOEYllyOIRyoOrBXM2/omPCX0kU18n/XZjgiyvkBy6Dy', 'm.edgeworth@steel-samurai.com', FALSE, null, null, 'Miles', 'Edgeworth'),
+    ('p-wright', '$2a$12$VurollGpuTOEYllyOIRyoOrBXM2/omPCX0kU18n/XZjgiyvkBy6Dy', 'p.wright@wright-anything.com', FALSE, null, null, 'Phoenix', 'Wright');
+    
 insert into roles (role_name)
 	values
 		('ADMIN'), 
@@ -156,7 +160,7 @@ insert into relationships (a_id, b_id, relationship_type)
 -- conversations
 insert into conversations (conversation_name, conversation_type)
 	values ('Steel Samurai Fan Club', 'friend'), 
-		   ('Miles E. and Pheonix W.', 'interest');
+		   ('Miles E. and Phoenix W.', 'interest');
         
 insert into users_conversations (user_id, conversation_id)
 	values 

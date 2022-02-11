@@ -19,19 +19,12 @@ public class AppUser extends User {
     private String email;
     private Location geolocation;
 
-    private String userGender;
-    private String preferredGender;
-    private int age;
-    private int travelRadius;  // miles
-    private String photo;
-
-    private String race;
-    private String ethnicity;
+    private String firstName;
+    private String lastName;
 
 
     // constructors
-    public AppUser( int userId, String username, String password, String email, int age, String userGender,
-                    String preferredGender, int travelRadius, String race, String ethnicity,
+    public AppUser( int userId, String username, String password, String email, String firstName, String lastName,
                     boolean disabled, List<String> roles) {
         super(
                 username,
@@ -46,12 +39,8 @@ public class AppUser extends User {
         this.roles = roles;
         this.email = email;
         this.username = username;
-        this.userGender = userGender;
-        this.preferredGender = preferredGender;
-        this.age = age;
-        this.travelRadius = travelRadius;
-        this.race = race;
-        this.ethnicity = ethnicity;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
 
@@ -72,6 +61,7 @@ public class AppUser extends User {
     }
 
 
+    // getters and setters
     public int getUserId() {
         return userId;
     }
@@ -113,59 +103,19 @@ public class AppUser extends User {
         this.geolocation = geolocation;
     }
 
-    public String getUserGender() {
-        return userGender;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserGender(String userGender) {
-        this.userGender = userGender;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public int getAge() {
-        return age;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getTravelRadius() {
-        return travelRadius;
-    }
-
-    public void setTravelRadius(int travelRadius) {
-        this.travelRadius = travelRadius;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public String getPreferredGender() {
-        return preferredGender;
-    }
-
-    public void setPreferredGender(String preferredGender) {
-        this.preferredGender = preferredGender;
-    }
-
-    public String getRace() {
-        return race;
-    }
-
-    public void setRace(String race) {
-        this.race = race;
-    }
-
-    public String getEthnicity() {
-        return ethnicity;
-    }
-
-    public void setEthnicity(String ethnicity) {
-        this.ethnicity = ethnicity;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

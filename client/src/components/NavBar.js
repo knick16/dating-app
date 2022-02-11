@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { useContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
+import Klavier from "../images/Klavier_Gavin_Portrait.png";
+import Miles from "../images/Miles_Edgeworth_Portrait.png";
+import Phoenix from "../images/Phoenix_Wright_Portrait.png";
 
 // Navigation bar for the website.
 function NavBar() {
@@ -32,7 +35,7 @@ function NavBar() {
                         <Link className="nav-link" to="/">Home</Link>
                     </li>
                     <li className="nav-item active">
-                        <Link className="nav-link" to="/Dating">Dating</Link>
+                        <Link className="nav-link" to="/dating/profile">Dating</Link>
                     </li>
                     <li className="nav-item active">
                         <Link className="nav-link" to="/Friends">Friends</Link>
@@ -51,6 +54,9 @@ function NavBar() {
                             localStorage.removeItem("token");
                         }}
                     >
+                        {userStatus.user.sub === 'k-gavin' && <img src={Klavier} className='placeholder-image' width='30px' height='30px' />}
+                        {userStatus.user.sub === 'm-edgeworth' && <img src={Miles} className='placeholder-image' width='30px' height='30px' />}
+                        {userStatus.user.sub === 'p-wright' && <img src={Phoenix} className='placeholder-image' width='30px' height='30px' />}
                         Logout {userStatus.user.sub}
                     </button>
                 </div>

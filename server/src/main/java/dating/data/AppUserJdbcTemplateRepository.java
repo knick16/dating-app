@@ -2,11 +2,17 @@ package dating.data;
 
 import dating.data.mappers.AppUserMapper;
 import dating.models.AppUser;
+import dating.models.MinimalUser;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -74,8 +80,67 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
 
     // Method: Register a new user.
     @Override
+    @Transactional
     public AppUser create(AppUser user) {
-        return null;
+
+        final String sql = "insert into users "
+                + "(username, "
+                + "password_hash, "
+                + "email, "
+                + "first_name, "
+                + "last_name) "
+                + "values (?, ?, ?, ?, ?);";
+
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getFirstName());
+            ps.setString(5, user.getLastName());
+            return ps;
+        }, keyHolder);
+
+        if (rowsAffected <= 0) {
+            return null;
+        }
+
+        user.setUserId(keyHolder.getKey().intValue());
+
+        updateRoles(user);
+
+        return user;
+    }
+
+    // Method: Add user profile information.
+    @Override
+    public boolean createPreferences(MinimalUser user) {
+
+        final String sql = "insert into user_preferences "
+                + "(user_id, "
+                + "age, "
+                + "user_gender, "
+                + "preferred_gender, "
+                + "travel_radius) "
+                + "values (?, ?, ?, ?, ?);";
+
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, user.getUserId());
+            ps.setInt(2, user.getAge());
+            ps.setString(3, user.getUserGender());
+            ps.setString(4, user.getPreferredGender());
+            ps.setInt(5, user.getTravelRadius());
+            return ps;
+        }, keyHolder);
+
+        if (rowsAffected <= 0) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -100,6 +165,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
 
     // Method: Find roles for a user.
     private List<String> getRolesByUsername(String username) {
+
         final String sql = "select "
                 + "r.role_name "
                 + "from users_roles ur "
@@ -109,4 +175,22 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         return jdbcTemplate.query(sql, (rs, rowId) -> rs.getString("role_name"), username);
     }
 
+    // Method: Update roles when creating a new user.
+    private void updateRoles(AppUser user) {
+
+        // Delete all roles, then re-add.
+        jdbcTemplate.update("delete from users_roles where user_id = ?;", user.getUserId());
+
+        Collection<GrantedAuthority> authorities = user.getAuthorities();
+
+        if (authorities == null) {
+            return;
+        }
+
+        for (String role : AppUser.convertAuthoritiesToRoles(authorities)) {
+            String sql = "insert into users_roles (user_id, role_id) "
+                    + "values (?, (select role_id from roles where role_name = ?));";
+            jdbcTemplate.update(sql, user.getUserId(), role);
+        }
+    }
 }

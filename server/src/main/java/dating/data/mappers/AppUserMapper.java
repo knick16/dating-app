@@ -34,12 +34,8 @@ public class AppUserMapper implements RowMapper<AppUser> {
                 rs.getString("username"),
                 rs.getString("password_hash"),
                 rs.getString("email"),
-                rs.getInt("age"),
-                rs.getString("user_gender"),
-                rs.getString("preferred_gender"),
-                rs.getInt("travel_radius"),
-                rs.getString("race"),
-                rs.getString("ethnicity"),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
                 rs.getBoolean("disabled"),
                 roles);
 

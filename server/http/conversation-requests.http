@@ -1,5 +1,5 @@
 @url = http://localhost:8080/api
-@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrb2FsYS1jaGF0Iiwic3ViIjoibS1lZGdld29ydGgiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTY0NDUyMDYzOH0.oFXBuQXWKrEgpG5Kzmz5V6QXtpoJZ7xXLW9OpJYQmDI
+@token = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrb2FsYS1jaGF0Iiwic3ViIjoibS1lZGdld29ydGgiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTY0NDUyNDIzNX0.PP0XWArV9mJjt_0q_Rhw6u8-ueT_wRQZozWNoxhH7Ok
 
 
 ###
